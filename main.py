@@ -1,6 +1,10 @@
 import sqlite3
+from tkinter import *
+from tkinter import ttk
+import ttkbootstrap as tkboot
+from ttkbootstrap.constants import *
 
-class Budget_DataBase:
+class Budget:
     def __init__(self):
         self.conn = sqlite3.connect("budget.db")
         self.cur = self.conn.cursor()
@@ -37,4 +41,83 @@ class Budget_DataBase:
         return rows
 
 
-db = Budget_DataBase()
+
+
+
+budget = Budget()
+
+window = tkboot.Window(themename="superhero")
+
+# Create Labels
+title_label = Label(window, text="Title")
+title_label.grid(row=0, column=0, padx=20, sticky="W")
+
+price_label = Label(window, text="Price")
+price_label.grid(row=1, column=0, padx=20, sticky="W")
+
+comment_label = Label(window, text="Category")
+comment_label.grid(row=2, column=0, padx=20, sticky="W")
+
+category_label = Label(window, text="Comment")
+category_label.grid(row=3, column=0, padx=20, sticky="W")
+
+# Create Entries
+product_text = StringVar()
+title_entry = Entry(window, textvariable=product_text)
+title_entry.grid(row=0, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+
+price_text = StringVar()
+price_entry = Entry(window, textvariable=price_text)
+price_entry.grid(row=1, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+
+comment_text = StringVar()
+comment_entry = Entry(window, textvariable=comment_text)
+comment_entry.grid(row=2, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+
+category_text = StringVar()
+category_entry = Entry(window, textvariable=category_text)
+category_entry.grid(row=3, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+
+# Create Buttons
+add_button = tkboot.Button(window, text="Add", width=15, style="success", takefocus=False, command=add_entry)
+add_button.grid(row=5, column=3)
+
+show_all_button = tkboot.Button(text="Show all", width=15, takefocus=False, command=show_all_entries)
+show_all_button.grid(row=6, column=3)
+
+search_button = tkboot.Button(text="Search", width=15, takefocus=False)
+search_button.grid(row=7, column=3)
+
+update_button = tkboot.Button(text="Update", width=15, takefocus=False)
+update_button.grid(row=8, column=3)
+
+remove_button = tkboot.Button(text="Delete", width=15, takefocus=False)
+remove_button.grid(row=9, column=3)
+
+# Create Budget Table
+tree = ttk.Treeview(window, columns=("c1", "c2", "c3", "c4", "c5"), show="headings", style="info")
+
+tree.column("#1", anchor=CENTER, width=50)
+tree.heading("#1", text="ID")
+
+tree.column("#2", anchor=CENTER)
+tree.heading("#2", text="Title")
+
+tree.column("#3", anchor=CENTER)
+tree.heading("#3", text="Price")
+
+tree.column("#4", anchor=CENTER)
+tree.heading("#4", text="Category")
+
+tree.column("#5", anchor=CENTER)
+tree.heading("#5", text="Comment")
+
+tree.grid(row=5, column=0, columnspan=2, rowspan=5)
+
+
+
+
+
+window.mainloop()
+
+
