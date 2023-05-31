@@ -41,7 +41,22 @@ class Budget:
         return rows
 
 
+def add_entry():
+    budget.insert(product_text.get(), price_text.get(), comment_text.get(), category_text.get())
+    show_all_entries()
+    focus_to_last_row()
 
+def show_all_entries():
+    tree.delete(*tree.get_children())
+
+    for row in budget.view():
+        tree.insert("", END, values=row)
+
+def focus_to_last_row():
+    child_id = tree.get_children()[-1]
+    tree.focus(child_id)
+    tree.selection_set(child_id)
+    tree.yview_moveto(1)
 
 
 budget = Budget()
@@ -82,7 +97,7 @@ category_entry.grid(row=3, column=0, columnspan=2, padx=(110, 0), sticky="EW")
 add_button = tkboot.Button(window, text="Add", width=15, style="success", takefocus=False, command=add_entry)
 add_button.grid(row=5, column=3)
 
-show_all_button = tkboot.Button(text="Show all", width=15, takefocus=False, command=show_all_entries)
+show_all_button = tkboot.Button(text="Show All", width=15, takefocus=False, command=show_all_entries)
 show_all_button.grid(row=6, column=3)
 
 search_button = tkboot.Button(text="Search", width=15, takefocus=False)
