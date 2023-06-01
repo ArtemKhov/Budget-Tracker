@@ -45,6 +45,7 @@ def add_entry():
     budget.insert(product_text.get(), price_text.get(), comment_text.get(), category_text.get())
     show_all_entries()
     focus_to_last_row()
+    clear_entries()
 
 
 def show_all_entries():
@@ -59,6 +60,12 @@ def focus_to_last_row():
     tree.focus(child_id)
     tree.selection_set(child_id)
     tree.yview_moveto(1)
+
+def clear_entries():
+    title_entry.delete(0, END)
+    price_entry.delete(0, END)
+    category_entry.delete(0, END)
+    comment_entry.delete(0, END)
 
 
 budget = Budget()
@@ -135,11 +142,7 @@ tree.grid(row=5, column=0, columnspan=2, rowspan=5)
 
 
 def get_selected_row(event):
-
-    title_entry.delete(0, END)
-    price_entry.delete(0, END)
-    category_entry.delete(0, END)
-    comment_entry.delete(0, END)
+    clear_entries()
 
     selected = tree.focus()
     values = tree.item(selected, "values")
