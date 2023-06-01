@@ -138,6 +138,10 @@ tree.heading("#5", text="Comment")
 
 tree.grid(row=5, column=0, columnspan=2, rowspan=5)
 
+# Show all table when app is launched
+if window:
+    show_all_entries()
+
 
 def get_selected_row(event):
     clear_entries()
