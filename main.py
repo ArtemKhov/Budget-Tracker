@@ -32,11 +32,11 @@ class Budget:
         self.conn.commit()
 
     def delete(self, id):
-        self.cur.execute("DELETE FROM purchase WHERE id=?", (id,))
+        self.cur.execute("DELETE FROM purchases WHERE id=?", (id,))
         self.conn.commit()
 
     def search(self, product="", price=""):
-        self.cur.execute("SELECT * FROM purchase WHERE product=?", (product,))
+        self.cur.execute("SELECT * FROM purchases WHERE product like ?", (product,))
         rows = self.cur.fetchall()
         return rows
 
@@ -54,6 +54,11 @@ def show_table():
     for row in budget.view():
         tree.insert("", END, values=row)
 
+def search_row():
+    clear_table()
+
+    for row in budget.search(product_text.get()):
+        tree.insert("", END, values=row)
 
 
 def focus_to_last_row():
@@ -113,7 +118,7 @@ add_button.grid(row=5, column=3)
 show_all_button = tkboot.Button(text="Show All", width=15, takefocus=False, command=show_table)
 show_all_button.grid(row=6, column=3)
 
-search_button = tkboot.Button(text="Search", width=15, takefocus=False)
+search_button = tkboot.Button(text="Search", width=15, takefocus=False, command=search_row)
 search_button.grid(row=7, column=3)
 
 update_button = tkboot.Button(text="Update", width=15, takefocus=False)
