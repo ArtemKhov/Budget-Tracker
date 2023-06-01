@@ -27,8 +27,9 @@ class Budget:
         self.cur.execute("INSERT INTO purchases VALUES (NULL,?,?,?,?)", (product, price, category, comment,))
         self.conn.commit()
 
-    def update(self, id, product, price):
-        self.cur.execute("UPDATE purchases SET product=?, price=? WHERE id=?", (product, price, id,))
+    def update(self, id, product, price, category, comment):
+        self.cur.execute("UPDATE purchases SET product=?, price=?, category=?, comment=? WHERE id=?",
+                         (product, price, category, comment, id,))
         self.conn.commit()
 
     def delete(self, id):
@@ -41,7 +42,7 @@ class Budget:
         return rows
 
 
-def add_entry():
+def add_record():
     budget.insert(product_text.get(), price_text.get(), comment_text.get(), category_text.get())
     show_table()
     focus_to_last_row()
@@ -54,11 +55,22 @@ def show_table():
     for row in budget.view():
         tree.insert("", END, values=row)
 
+
 def search_row():
     clear_table()
 
     for row in budget.search(product_text.get()):
         tree.insert("", END, values=row)
+
+
+def update_record():
+    selected = tree.focus()
+    values = tree.item(selected, "values")
+
+    budget.update(values[0], title_entry.get(), price_entry.get(), category_entry.get(), comment_entry.get())
+
+    clear_all_entries()
+    show_table()
 
 
 def focus_to_last_row():
@@ -74,8 +86,10 @@ def clear_all_entries():
     category_entry.delete(0, END)
     comment_entry.delete(0, END)
 
+
 def clear_table():
     tree.delete(*tree.get_children())
+
 
 budget = Budget()
 
@@ -112,7 +126,7 @@ comment_entry = Entry(window, textvariable=comment_text)
 comment_entry.grid(row=3, column=0, columnspan=2, padx=(110, 0), sticky="EW")
 
 # Create Buttons
-add_button = tkboot.Button(window, text="Add", width=15, style="success", takefocus=False, command=add_entry)
+add_button = tkboot.Button(window, text="Add", width=15, style="success", takefocus=False, command=add_record)
 add_button.grid(row=5, column=3)
 
 show_all_button = tkboot.Button(text="Show All", width=15, takefocus=False, command=show_table)
@@ -121,7 +135,7 @@ show_all_button.grid(row=6, column=3)
 search_button = tkboot.Button(text="Search", width=15, takefocus=False, command=search_row)
 search_button.grid(row=7, column=3)
 
-update_button = tkboot.Button(text="Update", width=15, takefocus=False)
+update_button = tkboot.Button(text="Update", width=15, takefocus=False, command=update_record)
 update_button.grid(row=8, column=3)
 
 remove_button = tkboot.Button(text="Delete", width=15, takefocus=False)
