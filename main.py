@@ -43,16 +43,17 @@ class Budget:
 
 def add_entry():
     budget.insert(product_text.get(), price_text.get(), comment_text.get(), category_text.get())
-    show_all_entries()
+    show_table()
     focus_to_last_row()
-    clear_entries()
+    clear_all_entries()
 
 
-def show_all_entries():
-    tree.delete(*tree.get_children())
+def show_table():
+    clear_table()
 
     for row in budget.view():
         tree.insert("", END, values=row)
+
 
 
 def focus_to_last_row():
@@ -61,12 +62,15 @@ def focus_to_last_row():
     tree.selection_set(child_id)
     tree.yview_moveto(1)
 
-def clear_entries():
+
+def clear_all_entries():
     title_entry.delete(0, END)
     price_entry.delete(0, END)
     category_entry.delete(0, END)
     comment_entry.delete(0, END)
 
+def clear_table():
+    tree.delete(*tree.get_children())
 
 budget = Budget()
 
@@ -106,7 +110,7 @@ comment_entry.grid(row=3, column=0, columnspan=2, padx=(110, 0), sticky="EW")
 add_button = tkboot.Button(window, text="Add", width=15, style="success", takefocus=False, command=add_entry)
 add_button.grid(row=5, column=3)
 
-show_all_button = tkboot.Button(text="Show All", width=15, takefocus=False, command=show_all_entries)
+show_all_button = tkboot.Button(text="Show All", width=15, takefocus=False, command=show_table)
 show_all_button.grid(row=6, column=3)
 
 search_button = tkboot.Button(text="Search", width=15, takefocus=False)
@@ -138,13 +142,10 @@ tree.heading("#5", text="Comment")
 
 tree.grid(row=5, column=0, columnspan=2, rowspan=5)
 
-# Show all table when app is launched
-if window:
-    show_all_entries()
 
 
 def get_selected_row(event):
-    clear_entries()
+    clear_all_entries()
 
     try:
         selected = tree.focus()
@@ -157,12 +158,12 @@ def get_selected_row(event):
     except IndexError:
         pass
 
-
-
 # Show values in Entries box when row is selected
 tree.bind("<ButtonRelease-1>", get_selected_row)
 
 
+# Show the whole table when app is launched
+show_table()
 
 window.mainloop()
 
