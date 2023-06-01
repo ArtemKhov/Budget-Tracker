@@ -111,39 +111,44 @@ category_label.grid(row=3, column=0, padx=20, sticky="W")
 # Create Entries
 product_text = StringVar()
 title_entry = Entry(window, textvariable=product_text)
-title_entry.grid(row=0, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+title_entry.grid(row=0, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 price_text = StringVar()
 price_entry = Entry(window, textvariable=price_text)
-price_entry.grid(row=1, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+price_entry.grid(row=1, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 category_text = StringVar()
 category_entry = Entry(window, textvariable=category_text)
-category_entry.grid(row=2, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+category_entry.grid(row=2, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 comment_text = StringVar()
 comment_entry = Entry(window, textvariable=comment_text)
-comment_entry.grid(row=3, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+comment_entry.grid(row=3, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 # Create Buttons
 add_button = tkboot.Button(window, text="Add", width=15, style="success", takefocus=False, command=add_record)
-add_button.grid(row=5, column=3)
+add_button.grid(row=5, column=4)
 
 show_all_button = tkboot.Button(text="Show All", width=15, takefocus=False, command=show_table)
-show_all_button.grid(row=6, column=3)
+show_all_button.grid(row=6, column=4)
 
 search_button = tkboot.Button(text="Search", width=15, takefocus=False, command=search_row)
-search_button.grid(row=7, column=3)
+search_button.grid(row=7, column=4)
 
 update_button = tkboot.Button(text="Update", width=15, takefocus=False, command=update_record)
-update_button.grid(row=8, column=3)
+update_button.grid(row=8, column=4)
 
 remove_button = tkboot.Button(text="Delete", width=15, takefocus=False)
-remove_button.grid(row=9, column=3)
+remove_button.grid(row=9, column=4)
 
 # Create Budget Table
-tree = ttk.Treeview(window, columns=("c1", "c2", "c3", "c4", "c5"), show="headings", style="info")
+tree_frame = Frame(window)
+tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=20, padx=20)
 
+tree_scroll = tkboot.Scrollbar(tree_frame, style="info-round")
+tree_scroll.grid(row=0, column=1, rowspan=5, sticky="NS")
+
+tree = ttk.Treeview(tree_frame, columns=("c1", "c2", "c3", "c4", "c5"), yscrollcommand=tree_scroll.set, show="headings", style="info")
 tree.column("#1", anchor=CENTER, width=50)
 tree.heading("#1", text="ID")
 
@@ -159,8 +164,8 @@ tree.heading("#4", text="Category")
 tree.column("#5", anchor=CENTER)
 tree.heading("#5", text="Comment")
 
-tree.grid(row=5, column=0, columnspan=2, rowspan=5)
-
+tree.grid(row=0, column=0)
+tree_scroll.configure(command=tree.yview)
 
 
 def get_selected_row(event):
