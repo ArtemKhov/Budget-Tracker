@@ -143,7 +143,7 @@ remove_button.grid(row=9, column=4)
 
 # Create Budget Table
 tree_frame = Frame(window)
-tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=20, padx=20)
+tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=10, padx=20)
 
 tree_scroll = tkboot.Scrollbar(tree_frame, style="info-round")
 tree_scroll.grid(row=0, column=1, rowspan=5, sticky="NS")
