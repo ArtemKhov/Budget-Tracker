@@ -46,11 +46,13 @@ def add_entry():
     show_all_entries()
     focus_to_last_row()
 
+
 def show_all_entries():
     tree.delete(*tree.get_children())
 
     for row in budget.view():
         tree.insert("", END, values=row)
+
 
 def focus_to_last_row():
     child_id = tree.get_children()[-1]
@@ -85,13 +87,15 @@ price_text = StringVar()
 price_entry = Entry(window, textvariable=price_text)
 price_entry.grid(row=1, column=0, columnspan=2, padx=(110, 0), sticky="EW")
 
-comment_text = StringVar()
-comment_entry = Entry(window, textvariable=comment_text)
-comment_entry.grid(row=2, column=0, columnspan=2, padx=(110, 0), sticky="EW")
-
 category_text = StringVar()
 category_entry = Entry(window, textvariable=category_text)
-category_entry.grid(row=3, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+category_entry.grid(row=2, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+
+comment_text = StringVar()
+comment_entry = Entry(window, textvariable=comment_text)
+comment_entry.grid(row=3, column=0, columnspan=2, padx=(110, 0), sticky="EW")
+
+
 
 # Create Buttons
 add_button = tkboot.Button(window, text="Add", width=15, style="success", takefocus=False, command=add_entry)
@@ -130,6 +134,23 @@ tree.heading("#5", text="Comment")
 tree.grid(row=5, column=0, columnspan=2, rowspan=5)
 
 
+def get_selected_row(event):
+
+    title_entry.delete(0, END)
+    price_entry.delete(0, END)
+    category_entry.delete(0, END)
+    comment_entry.delete(0, END)
+
+    selected = tree.focus()
+    values = tree.item(selected, "values")
+
+    title_entry.insert(0, values[1])
+    price_entry.insert(0, values[2])
+    category_entry.insert(0, values[3])
+    comment_entry.insert(0, values[4])
+
+# Show values in Entries box when row is selected
+tree.bind("<ButtonRelease-1>", get_selected_row)
 
 
 
