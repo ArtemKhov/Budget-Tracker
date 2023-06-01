@@ -102,8 +102,6 @@ comment_text = StringVar()
 comment_entry = Entry(window, textvariable=comment_text)
 comment_entry.grid(row=3, column=0, columnspan=2, padx=(110, 0), sticky="EW")
 
-
-
 # Create Buttons
 add_button = tkboot.Button(window, text="Add", width=15, style="success", takefocus=False, command=add_entry)
 add_button.grid(row=5, column=3)
@@ -144,13 +142,18 @@ tree.grid(row=5, column=0, columnspan=2, rowspan=5)
 def get_selected_row(event):
     clear_entries()
 
-    selected = tree.focus()
-    values = tree.item(selected, "values")
+    try:
+        selected = tree.focus()
+        values = tree.item(selected, "values")
 
-    title_entry.insert(0, values[1])
-    price_entry.insert(0, values[2])
-    category_entry.insert(0, values[3])
-    comment_entry.insert(0, values[4])
+        title_entry.insert(0, values[1])
+        price_entry.insert(0, values[2])
+        category_entry.insert(0, values[3])
+        comment_entry.insert(0, values[4])
+    except IndexError:
+        pass
+
+
 
 # Show values in Entries box when row is selected
 tree.bind("<ButtonRelease-1>", get_selected_row)
