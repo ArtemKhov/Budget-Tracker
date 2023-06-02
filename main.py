@@ -1,6 +1,7 @@
 import sqlite3
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import ttkbootstrap as tkboot
 from ttkbootstrap.constants import *
 
@@ -47,10 +48,15 @@ class Budget:
 
 
 def add_record():
-    budget.insert(product_text.get(), price_text.get(), comment_text.get(), category_text.get())
-    show_table()
-    focus_to_last_row()
-    clear_all_entries()
+    if product_text.get() == "":
+        messagebox.showwarning(title="Empty Title", message="Title can not be empty!")
+    elif price_text.get() == "":
+        messagebox.showwarning(title="Empty Price", message="Price can not be empty!")
+    else:
+        budget.insert(product_text.get(), price_text.get(), comment_text.get(), category_text.get())
+        show_table()
+        focus_to_last_row()
+        clear_all_entries()
 
 
 def show_table():
