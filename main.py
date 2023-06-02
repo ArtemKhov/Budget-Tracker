@@ -133,13 +133,13 @@ budget = Budget()
 window = tkboot.Window(themename="superhero")
 
 # Create Labels
-title_label = Label(window, text="Title")
+title_label = Label(window, text="Title*")
 title_label.grid(row=0, column=0, padx=20, sticky="W")
 
-price_label = Label(window, text="Price")
+price_label = Label(window, text="Price*")
 price_label.grid(row=1, column=0, padx=20, sticky="W")
 
-comment_label = Label(window, text="Category")
+comment_label = Label(window, text="Category*")
 comment_label.grid(row=2, column=0, padx=20, sticky="W")
 
 category_label = Label(window, text="Comment")
