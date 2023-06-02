@@ -147,15 +147,15 @@ category_label.grid(row=3, column=0, padx=20, sticky="W")
 
 # Create Entries
 product_text = StringVar()
-title_entry = Entry(window, textvariable=product_text)
+title_entry = tkboot.Entry(window, textvariable=product_text)
 title_entry.grid(row=0, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 price_text = StringVar()
-price_entry = Entry(window, textvariable=price_text)
+price_entry = tkboot.Entry(window, textvariable=price_text)
 price_entry.grid(row=1, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 comment_text = StringVar()
-comment_entry = Entry(window, textvariable=comment_text)
+comment_entry = tkboot.Entry(window, textvariable=comment_text)
 comment_entry.grid(row=3, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 # Create Combobox
@@ -165,7 +165,7 @@ category_combobox.grid(row=2, column=0, columnspan=3, padx=(110, 12), sticky="EW
 
 # Create Buttons
 add_button = tkboot.Button(window, text="Add Record", width=15, style="success", takefocus=False, command=add_record)
-add_button.grid(row=0, column=4, pady=(10,0), padx=10)
+add_button.grid(row=0, column=4)
 
 show_all_button = tkboot.Button(text="Show All", width=15, takefocus=False, command=show_table)
 show_all_button.grid(row=6, column=4)
@@ -177,15 +177,15 @@ update_button = tkboot.Button(text="Update Record", width=15, takefocus=False, c
 update_button.grid(row=8, column=4)
 
 remove_record_button = tkboot.Button(text="Remove Selected Record", width=25, takefocus=False, command=delete_record)
-remove_record_button.grid(row=10, column=1, padx=(250,0), pady=(0, 20), sticky="E")
+remove_record_button.grid(row=10, column=1, padx=(250,0), sticky="E")
 
 remove_all_records_button = tkboot.Button(text="Remove All Records", width=20, takefocus=False, command=delete_all_records)
-remove_all_records_button.grid(row=10, column=2, pady=(0, 20))
+remove_all_records_button.grid(row=10, column=2)
 
 
 # Create Budget Table
 tree_frame = Frame(window)
-tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=10, padx=20)
+tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=10, padx=(0, 20))
 
 tree_scroll = tkboot.Scrollbar(tree_frame, style="info-round")
 tree_scroll.grid(row=0, column=1, rowspan=5, sticky="NS")
@@ -230,7 +230,7 @@ tree.bind("<ButtonRelease-1>", get_selected_row)
 
 # Show the whole table when app is launched
 show_table()
-
+window.configure(pady=10, padx=10)
 window.mainloop()
 
 
