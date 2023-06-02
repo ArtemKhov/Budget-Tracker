@@ -53,7 +53,7 @@ def add_record():
     elif price_text.get() == "":
         messagebox.showwarning(title="Empty Price", message="Price can not be empty!")
     else:
-        budget.insert(product_text.get(), price_text.get(), comment_text.get(), category_text.get())
+        budget.insert(product_text.get(), price_text.get(), category_combobox.get(), comment_text.get())
         show_table()
         focus_to_last_row()
         clear_all_entries()
@@ -77,7 +77,7 @@ def update_record():
     selected = tree.focus()
     values = tree.item(selected, "values")
 
-    budget.update(values[0], title_entry.get(), price_entry.get(), category_entry.get(), comment_entry.get())
+    budget.update(values[0], title_entry.get(), price_entry.get(), category_combobox.get(), comment_entry.get())
 
     clear_all_entries()
     show_table()
@@ -107,11 +107,16 @@ def focus_to_last_row():
 def clear_all_entries():
     title_entry.delete(0, END)
     price_entry.delete(0, END)
-    category_entry.delete(0, END)
+    category_combobox.delete(0, END)
     comment_entry.delete(0, END)
 
 def clear_table():
     tree.delete(*tree.get_children())
+
+def open_categories_file():
+    with open("budget_categories/categories.txt", "r", encoding="UTF-8") as file:
+        categories = file.read().splitlines()
+        return categories
 
 budget = Budget()
 
@@ -139,13 +144,14 @@ price_text = StringVar()
 price_entry = Entry(window, textvariable=price_text)
 price_entry.grid(row=1, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
-category_text = StringVar()
-category_entry = Entry(window, textvariable=category_text)
-category_entry.grid(row=2, column=0, columnspan=3, padx=(110, 12), sticky="EW")
-
 comment_text = StringVar()
 comment_entry = Entry(window, textvariable=comment_text)
 comment_entry.grid(row=3, column=0, columnspan=3, padx=(110, 12), sticky="EW")
+
+# Create Combobox
+categories = open_categories_file()
+category_combobox = tkboot.Combobox(values=categories, state="readonly")
+category_combobox.grid(row=2, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 # Create Buttons
 add_button = tkboot.Button(window, text="Add Record", width=15, style="success", takefocus=False, command=add_record)
@@ -203,7 +209,7 @@ def get_selected_row(event):
 
         title_entry.insert(0, values[1])
         price_entry.insert(0, values[2])
-        category_entry.insert(0, values[3])
+        category_combobox.insert(0, category_combobox.get())
         comment_entry.insert(0, values[4])
     except IndexError:
         pass
