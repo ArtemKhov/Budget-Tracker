@@ -52,6 +52,8 @@ def add_record():
         messagebox.showwarning(title="Empty Title", message="Title can not be empty!")
     elif price_text.get() == "":
         messagebox.showwarning(title="Empty Price", message="Price can not be empty!")
+    elif category_combobox.get() == "":
+        messagebox.showwarning(title="Empty Category", message="Category can not be empty!")
     else:
         budget.insert(product_text.get(), price_text.get(), category_combobox.get(), comment_text.get())
         show_table()
@@ -93,9 +95,11 @@ def delete_record():
     except IndexError:
         pass
 
+
 def delete_all_records():
     budget.delete_all_rows()
     show_table()
+
 
 def focus_to_last_row():
     child_id = tree.get_children()[-1]
@@ -110,13 +114,16 @@ def clear_all_entries():
     category_combobox.set("")
     comment_entry.delete(0, END)
 
+
 def clear_table():
     tree.delete(*tree.get_children())
+
 
 def open_categories_file():
     with open("budget_categories/categories.txt", "r", encoding="UTF-8") as file:
         categories = file.read().splitlines()
         return categories
+
 
 budget = Budget()
 
