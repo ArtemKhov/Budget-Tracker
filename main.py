@@ -32,8 +32,12 @@ class Budget:
                          (product, price, category, comment, id,))
         self.conn.commit()
 
-    def delete(self, id):
+    def delete_row(self, id):
         self.cur.execute("DELETE FROM purchases WHERE id=?", (id,))
+        self.conn.commit()
+
+    def delete_all_rows(self):
+        self.cur.execute("DELETE FROM purchases")
         self.conn.commit()
 
     def search(self, product="", price=""):
@@ -73,6 +77,20 @@ def update_record():
     show_table()
 
 
+def delete_record():
+    try:
+        selected = tree.focus()
+        values = tree.item(selected, "values")
+
+        budget.delete_row(values[0])
+        show_table()
+    except IndexError:
+        pass
+
+def delete_all_records():
+    budget.delete_all_rows()
+    show_table()
+
 def focus_to_last_row():
     child_id = tree.get_children()[-1]
     tree.focus(child_id)
@@ -86,10 +104,8 @@ def clear_all_entries():
     category_entry.delete(0, END)
     comment_entry.delete(0, END)
 
-
 def clear_table():
     tree.delete(*tree.get_children())
-
 
 budget = Budget()
 
@@ -126,8 +142,8 @@ comment_entry = Entry(window, textvariable=comment_text)
 comment_entry.grid(row=3, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 # Create Buttons
-add_button = tkboot.Button(window, text="Add", width=15, style="success", takefocus=False, command=add_record)
-add_button.grid(row=5, column=4)
+add_button = tkboot.Button(window, text="Add Record", width=15, style="success", takefocus=False, command=add_record)
+add_button.grid(row=0, column=4, pady=(10,0), padx=10)
 
 show_all_button = tkboot.Button(text="Show All", width=15, takefocus=False, command=show_table)
 show_all_button.grid(row=6, column=4)
@@ -135,11 +151,15 @@ show_all_button.grid(row=6, column=4)
 search_button = tkboot.Button(text="Search", width=15, takefocus=False, command=search_row)
 search_button.grid(row=7, column=4)
 
-update_button = tkboot.Button(text="Update", width=15, takefocus=False, command=update_record)
+update_button = tkboot.Button(text="Update Record", width=15, takefocus=False, command=update_record)
 update_button.grid(row=8, column=4)
 
-remove_button = tkboot.Button(text="Delete", width=15, takefocus=False)
-remove_button.grid(row=9, column=4)
+remove_record_button = tkboot.Button(text="Remove Selected Record", width=25, takefocus=False, command=delete_record)
+remove_record_button.grid(row=10, column=1, padx=(250,0), pady=(0, 20), sticky="E")
+
+remove_all_records_button = tkboot.Button(text="Remove All Records", width=20, takefocus=False, command=delete_all_records)
+remove_all_records_button.grid(row=10, column=2, pady=(0, 20))
+
 
 # Create Budget Table
 tree_frame = Frame(window)
