@@ -41,8 +41,9 @@ class Budget:
         self.cur.execute("DELETE FROM purchases")
         self.conn.commit()
 
-    def search(self, product="", price=""):
-        self.cur.execute("SELECT * FROM purchases WHERE product like ?", (product,))
+    def search(self, product="", price="", category=""):
+        self.cur.execute("SELECT * FROM purchases WHERE product like ? OR price like ? OR category=?",
+                         (product, price, category,))
         rows = self.cur.fetchall()
         return rows
 
@@ -71,8 +72,10 @@ def show_table():
 def search_row():
     clear_table()
 
-    for row in budget.search(product_text.get()):
+    for row in budget.search(product_text.get(), price_text.get(), category_combobox.get()):
         tree.insert("", END, values=row)
+
+    clear_all_entries()
 
 
 def update_record():
