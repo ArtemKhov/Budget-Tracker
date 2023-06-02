@@ -107,7 +107,7 @@ def focus_to_last_row():
 def clear_all_entries():
     title_entry.delete(0, END)
     price_entry.delete(0, END)
-    category_combobox.delete(0, END)
+    category_combobox.set("")
     comment_entry.delete(0, END)
 
 def clear_table():
@@ -209,7 +209,7 @@ def get_selected_row(event):
 
         title_entry.insert(0, values[1])
         price_entry.insert(0, values[2])
-        category_combobox.insert(0, category_combobox.get())
+        category_combobox.set(values[3])
         comment_entry.insert(0, values[4])
     except IndexError:
         pass
