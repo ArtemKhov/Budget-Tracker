@@ -193,7 +193,13 @@ tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=10, padx=(0, 20))
 tree_scroll = tkboot.Scrollbar(tree_frame, style="info-round")
 tree_scroll.grid(row=0, column=1, rowspan=5, sticky="NS")
 
-tree = ttk.Treeview(tree_frame, columns=("c1", "c2", "c3", "c4", "c5"), yscrollcommand=tree_scroll.set, show="headings", style="info")
+tree = ttk.Treeview(tree_frame,
+                    columns=("c1", "c2", "c3", "c4", "c5"),
+                    yscrollcommand=tree_scroll.set,
+                    height=20,
+                    show="headings",
+                    style="info")
+
 tree.column("#1", anchor=CENTER, width=50)
 tree.heading("#1", text="ID")
 
