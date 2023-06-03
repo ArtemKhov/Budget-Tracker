@@ -131,66 +131,112 @@ def open_categories_file():
         return categories
 
 
+def switch_to_overview():
+    pass
+
+def switch_to_graph():
+    pass
+
 budget = Budget()
 
 window = tkboot.Window(themename="superhero")
+window.geometry("1200x600")
 
-# Create Labels
-title_label = Label(window, text="Title*")
-title_label.grid(row=0, column=0, padx=20, sticky="W")
+# Style
+app_Style = tkboot.Style()
+app_Style.configure("secondary.TButton", font=("", 14), foreground="white")
+app_Style.configure("TLabel", font=("", 16), background="#20374C")
 
-price_label = Label(window, text="Price*")
-price_label.grid(row=1, column=0, padx=20, sticky="W")
+# Sidebar Frame
+sidebar_frame = tkboot.Frame(window, style="dark")
+sidebar_frame.grid(row=0, column=0, ipadx=30, padx=(0,10), sticky="NESW")
 
-comment_label = Label(window, text="Category*")
-comment_label.grid(row=2, column=0, padx=20, sticky="W")
+# Sidebar Labels
+user_name_label = tkboot.Label(sidebar_frame, text="User_Name", style="TLabel")
+user_name_label.grid(row=0, column=0, pady=(20, 100))
 
-category_label = Label(window, text="Comment")
-category_label.grid(row=3, column=0, padx=20, sticky="W")
+# Sidebar Buttons
+overview_button = tkboot.Button(sidebar_frame,
+                                text="Overview",
+                                takefocus=False,
+                                style="secondary.TButton",
+                                command=switch_to_overview)
+overview_button.grid(row=1, column=0, sticky="WE")
 
-required_fields_label = Label(window, text="* required fields")
-required_fields_label.grid(row=4, column=0, padx=110)
+graph_button = tkboot.Button(sidebar_frame,
+                             text="Graph",
+                             takefocus=False,
+                             style="secondary.TButton",
+                             command=switch_to_graph)
+graph_button.grid(row=2, column=0, pady=20, sticky="WE")
 
-# Create Entries
+# Graph Frame
+graph_frame = Frame(window)
+graph_frame.grid(row=0, column=1, pady=(20, 10))
+
+graph_label = Label(graph_frame, text='GRAPH')
+graph_label.grid(row=0, column=0)
+
+# Overview Frame
+overview_frame = Frame(window)
+overview_frame.grid(row=0, column=1, pady=(20, 10))
+
+# Create Overview Labels
+title_label = Label(overview_frame, text="Title*")
+title_label.grid(row=0, column=0, sticky="W")
+
+price_label = Label(overview_frame, text="Price*")
+price_label.grid(row=1, column=0, sticky="W")
+
+comment_label = Label(overview_frame, text="Category*")
+comment_label.grid(row=2, column=0, sticky="W")
+
+category_label = Label(overview_frame, text="Comment")
+category_label.grid(row=3, column=0, sticky="W")
+
+required_fields_label = Label(overview_frame, text="* required fields")
+required_fields_label.grid(row=4, column=0, padx=85)
+
+# Create Overview Entries
 product_text = StringVar()
-title_entry = tkboot.Entry(window, textvariable=product_text)
+title_entry = tkboot.Entry(overview_frame, textvariable=product_text)
 title_entry.grid(row=0, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 price_text = StringVar()
-price_entry = tkboot.Entry(window, textvariable=price_text)
+price_entry = tkboot.Entry(overview_frame, textvariable=price_text)
 price_entry.grid(row=1, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
 comment_text = StringVar()
-comment_entry = tkboot.Entry(window, textvariable=comment_text)
+comment_entry = tkboot.Entry(overview_frame, textvariable=comment_text)
 comment_entry.grid(row=3, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
-# Create Combobox
+# Create Overview Combobox
 categories = open_categories_file()
-category_combobox = tkboot.Combobox(values=categories, state="readonly")
+category_combobox = tkboot.Combobox(overview_frame, values=categories, state="readonly")
 category_combobox.grid(row=2, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
-# Create Buttons
-add_button = tkboot.Button(window, text="Add Record", width=15, style="success", takefocus=False, command=add_record)
+# Create Overview Buttons
+add_button = tkboot.Button(overview_frame, text="Add Record", width=15, style="success", takefocus=False, command=add_record)
 add_button.grid(row=0, column=4)
 
-show_all_button = tkboot.Button(text="Show All", width=15, takefocus=False, command=show_table)
+show_all_button = tkboot.Button(overview_frame, text="Show All", width=15, takefocus=False, command=show_table)
 show_all_button.grid(row=6, column=4)
 
-search_button = tkboot.Button(text="Search", width=15, takefocus=False, command=search_row)
+search_button = tkboot.Button(overview_frame, text="Search", width=15, takefocus=False, command=search_row)
 search_button.grid(row=7, column=4)
 
-update_button = tkboot.Button(text="Update Record", width=15, takefocus=False, command=update_record)
+update_button = tkboot.Button(overview_frame, text="Update Record", width=15, takefocus=False, command=update_record)
 update_button.grid(row=8, column=4)
 
-remove_record_button = tkboot.Button(text="Remove Selected Record", width=25, takefocus=False, command=delete_record)
-remove_record_button.grid(row=10, column=1, padx=(250,0), sticky="E")
+remove_record_button = tkboot.Button(overview_frame, text="Remove Selected Record", width=25, takefocus=False, command=delete_record)
+remove_record_button.grid(row=10, column=1, padx=(150,0), sticky="E")
 
-remove_all_records_button = tkboot.Button(text="Remove All Records", width=20, takefocus=False, command=delete_all_records)
+remove_all_records_button = tkboot.Button(overview_frame, text="Remove All Records", width=20, takefocus=False, command=delete_all_records)
 remove_all_records_button.grid(row=10, column=2)
 
 
-# Create Budget Table
-tree_frame = Frame(window)
+# Create Overview Budget Table
+tree_frame = Frame(overview_frame)
 tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=10, padx=(0, 20))
 
 tree_scroll = tkboot.Scrollbar(tree_frame, style="info-round")
@@ -242,7 +288,11 @@ tree.bind("<ButtonRelease-1>", get_selected_row)
 
 # Show the whole table when app is launched
 show_table()
-window.configure(pady=10, padx=10)
+
+
+window.columnconfigure(0, weight=1)
+sidebar_frame.columnconfigure(0, weight=1)
+
 window.mainloop()
 
 
