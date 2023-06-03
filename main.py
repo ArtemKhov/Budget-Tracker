@@ -87,7 +87,6 @@ def update_record():
     clear_all_entries()
     show_table()
 
-
 def delete_record():
     try:
         selected = tree.focus()
@@ -100,8 +99,12 @@ def delete_record():
 
 
 def delete_all_records():
-    budget.delete_all_rows()
-    show_table()
+    warning = messagebox.askokcancel(title="Confirmation",
+                                     message="Are you sure you want to delete all data?")
+
+    if warning:
+        budget.delete_all_rows()
+        show_table()
 
 
 def focus_to_last_row():
