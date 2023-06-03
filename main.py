@@ -148,6 +148,9 @@ comment_label.grid(row=2, column=0, padx=20, sticky="W")
 category_label = Label(window, text="Comment")
 category_label.grid(row=3, column=0, padx=20, sticky="W")
 
+required_fields_label = Label(window, text="* required fields")
+required_fields_label.grid(row=4, column=0, padx=110)
+
 # Create Entries
 product_text = StringVar()
 title_entry = tkboot.Entry(window, textvariable=product_text)
