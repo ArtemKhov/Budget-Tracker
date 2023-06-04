@@ -11,7 +11,8 @@ class Budget:
         self.cur = self.conn.cursor()
 
         self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS purchases (id INTEGER PRIMARY KEY, product TEXT, price TEXT, category TEXT, comment TEXT)"
+            "CREATE TABLE IF NOT EXISTS purchases "
+            "(id INTEGER PRIMARY KEY, product TEXT, price TEXT, category TEXT, comment TEXT)"
         )
 
         self.conn.commit()
@@ -46,7 +47,6 @@ class Budget:
                          (product, price, category,))
         rows = self.cur.fetchall()
         return rows
-
 
 def add_record():
     if product_text.get() == "":
@@ -135,12 +135,17 @@ def open_categories_file():
 
 
 def switch_to_overview():
-    pass
+    overview_frame.grid(row=0, column=1, pady=(20, 10))
+    graph_frame.grid_forget()
+
 
 def switch_to_graph():
-    pass
+    graph_frame.grid(row=0, column=1, pady=(20, 10))
+    overview_frame.grid_forget()
+
 
 budget = Budget()
+
 
 window = tkboot.Window(themename="superhero")
 window.geometry("1200x600")
@@ -152,7 +157,7 @@ app_Style.configure("TLabel", font=("", 16), background="#20374C")
 
 # Sidebar Frame
 sidebar_frame = tkboot.Frame(window, style="dark")
-sidebar_frame.grid(row=0, column=0, ipadx=30, padx=(0,10), sticky="NESW")
+sidebar_frame.grid(row=0, column=0, ipadx=30, padx=(0,10), sticky="NSW")
 
 # Sidebar Labels
 user_name_label = tkboot.Label(sidebar_frame, text="User_Name", style="TLabel")
@@ -175,7 +180,6 @@ graph_button.grid(row=2, column=0, pady=20, sticky="WE")
 
 # Graph Frame
 graph_frame = Frame(window)
-graph_frame.grid(row=0, column=1, pady=(20, 10))
 
 graph_label = Label(graph_frame, text='GRAPH')
 graph_label.grid(row=0, column=0)
