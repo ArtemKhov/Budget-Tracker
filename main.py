@@ -79,13 +79,16 @@ def search_row():
 
 
 def update_record():
-    selected = tree.focus()
-    values = tree.item(selected, "values")
+    if product_text.get() == "" or price_text.get() == "" or category_combobox.get() == "":
+        messagebox.showwarning(title='Empty Fields', message="Select the record and fill in the *required fields")
+    else:
+        selected = tree.focus()
+        values = tree.item(selected, "values")
 
-    budget.update(values[0], title_entry.get(), price_entry.get(), category_combobox.get(), comment_entry.get())
+        budget.update(values[0], title_entry.get(), price_entry.get(), category_combobox.get(), comment_entry.get())
 
-    clear_all_entries()
-    show_table()
+        clear_all_entries()
+        show_table()
 
 def delete_record():
     try:
