@@ -156,6 +156,7 @@ def create_pie_chart():
 
     fig = px.pie(values=b.values, names=b.index, hole=0.3)
     fig.update_traces(textinfo="percent+label")
+    fig.update_layout(margin=dict(t=0, b=0, l=20, r=0))
     fig.write_image("pie_chart/pie_budget.png")
 
 def update_chart_image():
