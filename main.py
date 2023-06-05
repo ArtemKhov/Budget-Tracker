@@ -154,7 +154,8 @@ def create_pie_chart():
     a = df['price'].value_counts()
     b = df['category'].value_counts()
 
-    fig = px.pie(labels=b.index, values=b.values)
+    fig = px.pie(values=b.values, names=b.index, hole=0.3)
+    fig.update_traces(textinfo="percent+label")
     fig.write_image("pie_chart/pie_budget.png")
 
 def update_chart_image():
