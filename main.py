@@ -2,8 +2,11 @@ import sqlite3
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from PIL import Image,ImageTk
 import ttkbootstrap as tkboot
 from ttkbootstrap.constants import *
+import pandas as pd
+import plotly.express as px
 
 class Budget:
     def __init__(self):
@@ -142,18 +145,36 @@ def switch_to_overview():
 def switch_to_graph():
     graph_frame.grid(row=0, column=1, pady=(20, 10))
     overview_frame.grid_forget()
+    create_pie_chart()
+    update_chart_image()
+
+def create_pie_chart():
+    data = budget.conn
+    df = pd.read_sql_query("SELECT * FROM purchases", data)
+    a = df['price'].value_counts()
+    b = df['category'].value_counts()
+
+    fig = px.pie(labels=b.index, values=b.values)
+    fig.write_image("pie_chart/pie_budget.png")
+
+def update_chart_image():
+    pie_chart_img.configure(file="pie_chart/pie_budget.png")
+    canvas.itemconfig(image_container, image=pie_chart_img)
 
 
 budget = Budget()
 
-
 window = tkboot.Window(themename="superhero")
-window.geometry("1200x600")
+
+
+
 
 # Style
 app_Style = tkboot.Style()
 app_Style.configure("secondary.TButton", font=("", 14), foreground="white")
 app_Style.configure("TLabel", font=("", 16), background="#20374C")
+
+
 
 # Sidebar Frame
 sidebar_frame = tkboot.Frame(window, style="dark")
@@ -178,11 +199,18 @@ graph_button = tkboot.Button(sidebar_frame,
                              command=switch_to_graph)
 graph_button.grid(row=2, column=0, pady=20, sticky="WE")
 
+
+
 # Graph Frame
 graph_frame = Frame(window)
 
-graph_label = Label(graph_frame, text='GRAPH')
-graph_label.grid(row=0, column=0)
+# Create Canvas container for pie_chart
+canvas = Canvas(graph_frame, width=750, height=550)
+canvas.grid(row=0, column=0)
+pie_chart_img = PhotoImage(file="pie_chart/pie_budget.png")
+image_container = canvas.create_image(350, 250, image=pie_chart_img)
+
+
 
 # Overview Frame
 overview_frame = Frame(window)
