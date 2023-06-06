@@ -26,13 +26,19 @@ class Budget:
             self.cur.execute("INSERT INTO purchases VALUES (NULL,?,?,?,?)", (product, price, category, comment,))
             self.conn.commit()
         except sqlite3.IntegrityError:
-            messagebox.showwarning(title="Not Number", message="Only numbers are allowed in the Price field (not Text)."
+            messagebox.showwarning(title="Not Number",
+                                   message="Only numbers are allowed in the Price field (not Text)."
                                                                "\n\nFor instance: 100 | 5648.55 | 456 | 0 etc.")
 
     def update(self, id, product, price, category, comment):
-        self.cur.execute("UPDATE purchases SET product=?, price=?, category=?, comment=? WHERE id=?",
-                         (product, price, category, comment, id,))
-        self.conn.commit()
+        try:
+            self.cur.execute("UPDATE purchases SET product=?, price=?, category=?, comment=? WHERE id=?",
+                             (product, price, category, comment, id,))
+            self.conn.commit()
+        except sqlite3.IntegrityError:
+            messagebox.showwarning(title="Not Number",
+                                   message="Only numbers are allowed in the Price field (not Text)."
+                                                               "\n\nFor instance: 100 | 5648.55 | 456 | 0 etc.")
 
     def delete_row(self, id):
         self.cur.execute("DELETE FROM purchases WHERE id=?", (id,))
