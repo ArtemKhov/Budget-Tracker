@@ -114,9 +114,12 @@ def create_pie_chart():
     category_sum_price = df.groupby("category")["price"].sum()
 
     # create pie chart
-    fig = px.pie(values=category_sum_price.values, names=category_sum_price.index, hole=0.3)
-    fig.update_traces(textinfo="value+label")
-    fig.update_layout(margin=dict(t=20, b=20, l=20, r=20))
+    fig = px.pie(title="Total amount of money spent by category",
+                 values=category_sum_price.values,
+                 names=category_sum_price.index,
+                 hole=0.3)
+    fig.update_traces(textinfo="value+label", textfont_color="white")
+    fig.update_layout(margin=dict(t=50, b=20, l=20, r=20), paper_bgcolor='#2b3e50', font=dict(color="white"))
     fig.write_image("pie_chart/pie_budget.png")
 
 # Update image into Canvas every time when update any values in the DataBase
