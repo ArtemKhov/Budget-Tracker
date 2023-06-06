@@ -18,7 +18,7 @@ def add_record():
     else:
         budget.insert(product_text.get(), price_text.get(), category_combobox.get(), comment_text.get())
         show_table()
-        focus_to_last_row()
+        focus_to_the_last_row()
         clear_all_entries()
 
 
@@ -70,7 +70,7 @@ def delete_all_records():
         show_table()
 
 
-def focus_to_last_row():
+def focus_to_the_last_row():
     child_id = tree.get_children()[-1]
     tree.focus(child_id)
     tree.selection_set(child_id)
@@ -106,16 +106,20 @@ def switch_to_graph():
     update_chart_image()
 
 def create_pie_chart():
+    # connect to the Budget DataBase and read the whole DB with the pandas
     data = budget.conn
     df = pd.read_sql_query("SELECT * FROM purchases", data)
-    a = df['price'].value_counts()
-    b = df['category'].value_counts()
 
-    fig = px.pie(values=b.values, names=b.index, hole=0.3)
-    fig.update_traces(textinfo="percent+label")
-    fig.update_layout(margin=dict(t=0, b=0, l=20, r=0))
+    # group category columns and show sum of the values from the Price field
+    category_sum_price = df.groupby("category")["price"].sum()
+
+    # create pie chart
+    fig = px.pie(values=category_sum_price.values, names=category_sum_price.index, hole=0.3)
+    fig.update_traces(textinfo="value+label")
+    fig.update_layout(margin=dict(t=20, b=20, l=20, r=20))
     fig.write_image("pie_chart/pie_budget.png")
 
+# Update image into Canvas every time when update any values in the DataBase
 def update_chart_image():
     pie_chart_img.configure(file="pie_chart/pie_budget.png")
     canvas.itemconfig(image_container, image=pie_chart_img)
@@ -162,7 +166,7 @@ graph_button.grid(row=2, column=0, pady=20, sticky="WE")
 # Graph Frame
 graph_frame = Frame(window)
 
-# Create Canvas container for pie_chart
+# Create Canvas container for Pie Chart
 canvas = Canvas(graph_frame, width=750, height=550)
 canvas.grid(row=0, column=0)
 pie_chart_img = PhotoImage(file="pie_chart/pie_budget.png")
@@ -260,7 +264,7 @@ tree.heading("#5", text="Comment")
 tree.grid(row=0, column=0)
 tree_scroll.configure(command=tree.yview)
 
-
+# Show values in Entries box when row is selected
 def get_selected_row(event):
     clear_all_entries()
 
@@ -275,8 +279,8 @@ def get_selected_row(event):
     except IndexError:
         pass
 
-# Show values in Entries box when row is selected
 tree.bind("<ButtonRelease-1>", get_selected_row)
+
 
 
 # Show the whole table when app is launched
