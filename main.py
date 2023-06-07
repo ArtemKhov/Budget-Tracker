@@ -50,6 +50,7 @@ def update_record():
         clear_all_entries()
         show_table()
 
+
 def delete_record():
     try:
         selected = tree.focus()
@@ -105,6 +106,7 @@ def switch_to_graph():
     create_pie_chart()
     update_chart_image()
 
+
 def create_pie_chart():
     # connect to the Budget DataBase and read the whole DB with the pandas
     data = budget.conn
@@ -122,6 +124,7 @@ def create_pie_chart():
     fig.update_layout(margin=dict(t=50, b=20, l=20, r=20), paper_bgcolor='#2b3e50', font=dict(color="white"))
     fig.write_image("pie_chart/pie_budget.png")
 
+
 # Update image into Canvas every time when update any values in the DataBase
 def update_chart_image():
     pie_chart_img.configure(file="pie_chart/pie_budget.png")
@@ -131,6 +134,7 @@ def update_chart_image():
 budget = Budget()
 
 window = tkboot.Window(themename="superhero")
+window.geometry("1200x800")
 
 
 
@@ -138,7 +142,6 @@ window = tkboot.Window(themename="superhero")
 app_Style = tkboot.Style()
 app_Style.configure("secondary.TButton", font=("", 14), foreground="white")
 app_Style.configure("TLabel", font=("", 16), background="#20374C")
-
 
 
 # Sidebar Frame
