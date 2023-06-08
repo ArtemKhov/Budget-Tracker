@@ -47,7 +47,6 @@ signin_window = tkboot.Window(themename="superhero")
 signin_window.geometry("600x440")
 signin_window.title('Login')
 
-
 # Style
 app_Style = tkboot.Style()
 app_Style.configure("dark.TButton",

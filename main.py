@@ -6,6 +6,7 @@ from ttkbootstrap.constants import *
 import pandas as pd
 import plotly.express as px
 from budget_db import Budget
+from PIL import Image, ImageTk
 
 
 def add_record():
@@ -127,7 +128,8 @@ def create_pie_chart():
 
 # Update image into Canvas every time when update any values in the DataBase
 def update_chart_image():
-    pie_chart_img.configure(file="pie_chart/pie_budget.png")
+    updated_image = ImageTk.PhotoImage(Image.open("pie_chart/pie_budget.png"))
+    pie_chart_img.image = updated_image
     canvas.itemconfig(image_container, image=pie_chart_img)
 
 
@@ -175,7 +177,8 @@ graph_frame = Frame(window)
 # Create Canvas container for Pie Chart
 canvas = Canvas(graph_frame, width=750, height=550)
 canvas.grid(row=0, column=0)
-pie_chart_img = PhotoImage(file="pie_chart/pie_budget.png")
+pie_chart_img = ImageTk.PhotoImage(Image.open("pie_chart/pie_budget.png"))
+# pie_chart_img = PhotoImage(file="pie_chart/pie_budget.png")
 image_container = canvas.create_image(350, 250, image=pie_chart_img)
 
 
