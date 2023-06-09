@@ -8,7 +8,7 @@ class Budget:
 
         self.cur.execute(
             "CREATE TABLE IF NOT EXISTS purchases "
-            "(id INTEGER PRIMARY KEY, product TEXT, price REAL CHECK (typeof(price) = 'real'), category TEXT, comment TEXT)"
+            "(id INTEGER PRIMARY KEY, product TEXT, price REAL CHECK (typeof(price) = 'real' AND price >= 0), category TEXT, comment TEXT)"
         )
 
         self.conn.commit()
@@ -26,8 +26,8 @@ class Budget:
             self.cur.execute("INSERT INTO purchases VALUES (NULL,?,?,?,?)", (product, price, category, comment,))
             self.conn.commit()
         except sqlite3.IntegrityError:
-            messagebox.showwarning(title="Not Number",
-                                   message="Only numbers are allowed in the Price field (not Text)."
+            messagebox.showwarning(title="Incorrect value",
+                                   message="Only numbers equal to or greater than 0 are allowed in the Price field."
                                                                "\n\nFor instance: 100 | 5648.55 | 456 | 0 etc.")
 
     def update(self, id, product, price, category, comment):
@@ -36,8 +36,8 @@ class Budget:
                              (product, price, category, comment, id,))
             self.conn.commit()
         except sqlite3.IntegrityError:
-            messagebox.showwarning(title="Not Number",
-                                   message="Only numbers are allowed in the Price field (not Text)."
+            messagebox.showwarning(title="Incorrect value",
+                                   message="Only numbers equal to or greater than 0 are allowed in the Price field."
                                                                "\n\nFor instance: 100 | 5648.55 | 456 | 0 etc.")
 
     def delete_row(self, id):
