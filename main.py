@@ -95,6 +95,11 @@ def main_window():
         tree.delete(*tree.get_children())
 
 
+    def disable_expand_tree_columns(event):
+        if tree.identify_region(event.x, event.y) == "separator":
+            return "break"
+
+
     def open_categories_file():
         with open("budget_categories/categories.txt", "r", encoding="UTF-8") as file:
             categories = file.read().splitlines()
@@ -240,7 +245,6 @@ def main_window():
     remove_all_records_button = tkboot.Button(overview_frame, text="Remove All Records", width=20, takefocus=False, command=delete_all_records)
     remove_all_records_button.grid(row=10, column=2)
 
-
     # Create Overview Budget Table
     tree_frame = Frame(overview_frame)
     tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=10, padx=(0, 20))
@@ -253,6 +257,7 @@ def main_window():
                         yscrollcommand=tree_scroll.set,
                         height=20,
                         show="headings",
+                        selectmode="browse",
                         style="info")
 
     tree.column("#1", anchor=CENTER, width=50)
@@ -289,6 +294,7 @@ def main_window():
             pass
 
     tree.bind("<ButtonRelease-1>", get_selected_row)
+    tree.bind("<Button-1>", disable_expand_tree_columns)
 
 
     # Show the whole table when app is launched
