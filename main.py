@@ -75,10 +75,13 @@ def main_window():
 
 
     def focus_to_the_last_row():
-        child_id = tree.get_children()[-1]
-        tree.focus(child_id)
-        tree.selection_set(child_id)
-        tree.yview_moveto(1)
+        try:
+            child_id = tree.get_children()[-1]
+            tree.focus(child_id)
+            tree.selection_set(child_id)
+            tree.yview_moveto(1)
+        except IndexError:
+            pass
 
 
     def clear_all_entries():
