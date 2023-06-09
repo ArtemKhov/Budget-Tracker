@@ -118,22 +118,25 @@ def main_window():
         update_chart_image()
 
 
-    def create_pie_chart():
-        # connect to the Budget DataBase and read the whole DB with the pandas
+    def summarize_prices_by_category():
         data = budget.conn
         df = pd.read_sql_query("SELECT * FROM purchases", data)
 
         # group category columns and show sum of the values from the Price field
         category_sum_price = df.groupby("category")["price"].sum()
 
-        # create pie chart
+        return category_sum_price
+
+
+    def create_pie_chart():
         fig = px.pie(title="Total amount of money spent by category",
-                     values=category_sum_price.values,
-                     names=category_sum_price.index,
+                     values=summarize_prices_by_category().values,
+                     names=summarize_prices_by_category().index,
                      hole=0.3)
         fig.update_traces(textinfo="value+label", textfont_color="white")
         fig.update_layout(margin=dict(t=50, b=20, l=20, r=20), paper_bgcolor='#2b3e50', font=dict(color="white"))
         fig.write_image("pie_chart/pie_budget.png")
+
 
 
     # Update image into Canvas every time when update any values in the DataBase
