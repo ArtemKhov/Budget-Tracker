@@ -3,10 +3,12 @@ from tkinter import ttk
 from tkinter import messagebox
 import ttkbootstrap as tkboot
 from ttkbootstrap.constants import *
+import textwrap
 import pandas as pd
 import plotly.express as px
 from budget_db import Budget
 from signin import login_window
+
 
 # Show main window when user correctly login
 def main_window():
@@ -269,7 +271,7 @@ def main_window():
     tree.column("#2", anchor=CENTER)
     tree.heading("#2", text="Title")
 
-    tree.column("#3", anchor=CENTER)
+    tree.column("#3", anchor=CENTER, width=50)
     tree.heading("#3", text="Price")
 
     tree.column("#4", anchor=CENTER)

@@ -22,7 +22,7 @@ def login_window(parent):
         if password_form.get() == "password":
             password_form.delete(0, END)
             password_form.configure(show="*", foreground="white")
-            eyeButton.grid(row=2, column=1)
+            eyeButton.grid(row=2, column=0, padx=(0, 60), sticky="E")
 
     def password_enter_focus_out(event):
         if password_form.get() == "":
@@ -49,9 +49,11 @@ def login_window(parent):
     # Style
     app_Style = tkboot.Style()
     app_Style.configure("dark.TButton",
-                        font=('Microsoft Yeahei UI Light', 9, 'bold underline'),
+                        font=("Microsoft Yeahei UI Light", 9, "bold underline"),
                         foreground="white",
                         background="#20374C")
+    app_Style.configure("success.TButton", font=('', 12, "bold"))
+    app_Style.configure("dark.TLabel")
 
     # Login Frame
     login_frame = tkboot.Frame(signin_window, style="dark")
@@ -59,17 +61,17 @@ def login_window(parent):
 
     # Login Label
     login_text = tkboot.Label(login_frame, text="Sign In", font=("", 20, "bold"), background="#20374C")
-    login_text.grid(row=0, column=0)
+    login_text.grid(row=0, column=0, pady=20)
 
     # Username and password entries
-    username_form = tkboot.Entry(login_frame, style="info", foreground="grey")
-    username_form.grid(row=1, column=0)
+    username_form = tkboot.Entry(login_frame, style="info", width=30, font=("", 12), foreground="grey")
+    username_form.grid(row=1, column=0, pady=(0, 10), ipady=5)
     username_form.insert(0, 'username')
     username_form.bind("<FocusIn>", user_enter_focus_in)
     username_form.bind("<FocusOut>", user_enter_focus_out)
 
-    password_form = tkboot.Entry(login_frame, style="info", foreground="grey")
-    password_form.grid(row=2, column=0)
+    password_form = tkboot.Entry(login_frame, style="info", width=30, font=("", 12), foreground="grey")
+    password_form.grid(row=2, column=0, ipady=5)
     password_form.insert(0, "password")
     password_form.bind("<FocusIn>", password_enter_focus_in)
     password_form.bind("<FocusOut>", password_enter_focus_out)
@@ -85,21 +87,29 @@ def login_window(parent):
 
     forget_button = tkboot.Button(login_frame, text='Forgot password?', style="dark.TButton", takefocus=False,
                                   cursor='hand2')
-    forget_button.grid(row=3, column=0)
+    forget_button.grid(row=3, column=0, sticky="E", padx=(0, 100))
 
     sign_in_button = tkboot.Button(login_frame,
                                    text="Sign In",
-                                   style='success',
+                                   style='success.TButton',
                                    takefocus=False,
+                                   width=20,
                                    command=signup_page)
-    sign_in_button.grid(row=4, column=0)
+    sign_in_button.grid(row=4, column=0, pady=20, ipady=5)
 
-    signupLabel = tkboot.Label(login_frame, text="Don't have an account?", background="#20374C")
-    signupLabel.grid(row=5, column=0)
+    signupLabel = tkboot.Label(login_frame, style="dark.TLabel",
+                               text="Don't have an account?",
+                               foreground="white",
+                               background="#20374C",
+                               font=("", 9))
+    signupLabel.grid(row=5, column=0, padx=(125, 0), pady=(0,10), sticky="W")
 
-    new_account_button = tkboot.Button(login_frame, text='Create New One', style="dark.TButton", takefocus=False,
+    new_account_button = tkboot.Button(login_frame,
+                                       style="dark.TButton",
+                                       text='Create New One',
+                                       takefocus=False,
                                        cursor='hand2')
-    new_account_button.grid(row=5, column=1)
+    new_account_button.grid(row=5, column=0, padx=(0, 125), pady=(0,10), sticky="E")
 
     signin_window.columnconfigure(0, weight=1)
     login_frame.columnconfigure(0, weight=1)
