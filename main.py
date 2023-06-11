@@ -7,7 +7,7 @@ import textwrap
 import pandas as pd
 import plotly.express as px
 from budget_db import Budget
-from signin import login_window
+from sign_in import login_window
 
 
 # Show main window when user correctly login
@@ -114,10 +114,14 @@ def main_window():
 
 
     def switch_to_graph():
-        graph_frame.grid(row=0, column=1, pady=(20, 10))
-        overview_frame.grid_forget()
-        create_pie_chart()
-        update_chart_image()
+        if budget.view() == []:
+            messagebox.showwarning(title="Empty Table", message="There's nothing in the purchases."
+                                                                "\n\nAdd your purchase records in Overview menu to form a Graph.")
+        else:
+            graph_frame.grid(row=0, column=1, pady=(20, 10))
+            overview_frame.grid_forget()
+            create_pie_chart()
+            update_chart_image()
 
 
     def summarize_prices_by_category():
@@ -148,6 +152,8 @@ def main_window():
 
 
     budget = Budget()
+    if budget.view() == []:
+        print("Yes")
 
 
     window = tkboot.Window(themename="superhero")
