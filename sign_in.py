@@ -1,11 +1,12 @@
 from tkinter import *
 import ttkbootstrap as tkboot
+from sign_up import registration_window
 
 def login_window(parent):
 
     def transition_to_signup_page():
         signin_window.destroy()
-        parent.deiconify()
+        registration_window(signin_window)
 
     def transition_to_main_window():
         signin_window.destroy()
@@ -109,8 +110,8 @@ def login_window(parent):
                                        style="dark.TButton",
                                        text='Create New One',
                                        takefocus=False,
-                                       cursor='hand2')
-                                       # command=signup_page)
+                                       cursor='hand2',
+                                       command=transition_to_signup_page)
     new_account_button.grid(row=5, column=0, padx=(0, 125), pady=(0,10), sticky="E")
 
     # Set up layers

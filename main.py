@@ -3,7 +3,6 @@ from tkinter import ttk
 from tkinter import messagebox
 import ttkbootstrap as tkboot
 from ttkbootstrap.constants import *
-import textwrap
 import pandas as pd
 import plotly.express as px
 from budget_db import Budget
@@ -115,8 +114,9 @@ def main_window():
 
     def switch_to_graph():
         if budget.view() == []:
-            messagebox.showwarning(title="Empty Table", message="There's nothing in the purchases."
-                                                                "\n\nAdd your purchase records in Overview menu to form a Graph.")
+            messagebox.showwarning(title="Empty Table",
+                                   message="There's nothing in the purchases."
+                                           "\n\nAdd your purchase records in Overview menu to form a Graph.")
         else:
             graph_frame.grid(row=0, column=1, pady=(20, 10))
             overview_frame.grid_forget()
