@@ -152,8 +152,6 @@ def main_window():
 
 
     budget = Budget()
-    if budget.view() == []:
-        print("Yes")
 
 
     window = tkboot.Window(themename="superhero")
@@ -323,5 +321,3 @@ def main_window():
 
 if __name__ == '__main__':
     main_window()
-
-
