@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import ttkbootstrap as tkboot
 from ttkbootstrap.constants import *
+from PIL import Image, ImageTk
 import pandas as pd
 import plotly.express as px
 from budget_db import Budget
@@ -174,9 +175,11 @@ def main_window():
     sidebar_frame = tkboot.Frame(window, style="dark")
     sidebar_frame.grid(row=0, column=0, ipadx=30, padx=(0,10), sticky="NSW")
 
-    # Sidebar Labels
-    user_name_label = tkboot.Label(sidebar_frame, text="User_Name", style="TLabel")
-    user_name_label.grid(row=0, column=0, pady=(20, 100))
+    image = Image.open("images/budget_sidebar.png")
+    img = image.resize((128, 128))
+    logo_image = ImageTk.PhotoImage(img)
+    logo_sidebar = tkboot.Label(sidebar_frame, image=logo_image)
+    logo_sidebar.grid(row=0, column=0, pady=20)
 
     # Sidebar Buttons
     overview_button = tkboot.Button(sidebar_frame,
@@ -293,7 +296,7 @@ def main_window():
     tree.column("#4", anchor=CENTER, stretch=False)
     tree.heading("#4", text="Category")
 
-    tree.column("#5", anchor=W, minwidth=1050, stretch=True)
+    tree.column("#5", anchor=W, minwidth=1000, stretch=True)
     tree.heading("#5", text="Comment", anchor=W)
 
     tree.grid(row=0, column=0)
