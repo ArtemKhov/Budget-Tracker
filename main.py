@@ -15,6 +15,8 @@ def main_window():
     def add_record():
         if product_text.get() == "":
             messagebox.showwarning(title="Empty Title", message="Title can not be empty!")
+        elif int(len(product_text.get())) >= 32:
+            messagebox.showwarning(title="Too long", message="The Title cannot be longer than 250 characters")
         elif price_text.get() == "":
             messagebox.showwarning(title="Empty Price", message="Price can not be empty!")
         elif category_combobox.get() == "":
