@@ -15,12 +15,14 @@ def main_window():
     def add_record():
         if product_text.get() == "":
             messagebox.showwarning(title="Empty Title", message="Title can not be empty!")
-        elif int(len(product_text.get())) >= 32:
-            messagebox.showwarning(title="Too long", message="The Title cannot be longer than 250 characters")
+        elif int(len(product_text.get())) > 32:
+            messagebox.showwarning(title="Too long", message="The Title cannot be longer than 32 characters")
         elif price_text.get() == "":
             messagebox.showwarning(title="Empty Price", message="Price can not be empty!")
         elif category_combobox.get() == "":
             messagebox.showwarning(title="Empty Category", message="Category can not be empty!")
+        elif int(len(comment_text.get())) > 175:
+            messagebox.showwarning(title="Too long", message="The Comment cannot be longer than 175 characters")
         else:
             budget.insert(product_text.get(), price_text.get(), category_combobox.get(), comment_text.get())
             show_table()
@@ -47,6 +49,10 @@ def main_window():
     def update_record():
         if product_text.get() == "" or price_text.get() == "" or category_combobox.get() == "":
             messagebox.showwarning(title='Empty Fields', message="Select the record and fill in the *required fields")
+        elif int(len(product_text.get())) > 32:
+            messagebox.showwarning(title="Too long", message="The Title cannot be longer than 32 characters")
+        elif int(len(comment_text.get())) > 175:
+            messagebox.showwarning(title="Too long", message="The Comment cannot be longer than 175 characters")
         else:
             selected = tree.focus()
             values = tree.item(selected, "values")
@@ -260,34 +266,40 @@ def main_window():
     tree_frame = Frame(overview_frame)
     tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=10, padx=(0, 20))
 
-    tree_scroll = tkboot.Scrollbar(tree_frame, style="info-round")
-    tree_scroll.grid(row=0, column=1, rowspan=5, sticky="NS")
+    tree_vertical_scroll = tkboot.Scrollbar(tree_frame, style="info-round")
+    tree_vertical_scroll.grid(row=0, column=1, rowspan=5, sticky="NS")
+
+    tree_horizontal_scroll = tkboot.Scrollbar(tree_frame, style="info-round", orient=HORIZONTAL)
+    tree_horizontal_scroll.grid(row=6, column=0, rowspan=5, sticky="WE")
 
     tree = ttk.Treeview(tree_frame,
                         columns=("c1", "c2", "c3", "c4", "c5"),
-                        yscrollcommand=tree_scroll.set,
+                        yscrollcommand=tree_vertical_scroll.set,
+                        xscrollcommand=tree_horizontal_scroll.set,
                         height=20,
                         show="headings",
                         selectmode="browse",
                         style="info")
 
-    tree.column("#1", anchor=CENTER, width=50)
+    tree.column("#1", anchor=CENTER, width=50, stretch=False)
     tree.heading("#1", text="ID")
 
-    tree.column("#2", anchor=CENTER)
+    tree.column("#2", anchor=CENTER, stretch=False)
     tree.heading("#2", text="Title")
 
-    tree.column("#3", anchor=CENTER, width=50)
+    tree.column("#3", anchor=CENTER, width=50, stretch=False)
     tree.heading("#3", text="Price")
 
-    tree.column("#4", anchor=CENTER)
+    tree.column("#4", anchor=CENTER, stretch=False)
     tree.heading("#4", text="Category")
 
-    tree.column("#5", anchor=CENTER)
-    tree.heading("#5", text="Comment")
+    tree.column("#5", anchor=W, minwidth=1050, stretch=True)
+    tree.heading("#5", text="Comment", anchor=W)
 
     tree.grid(row=0, column=0)
-    tree_scroll.configure(command=tree.yview)
+
+    tree_vertical_scroll.configure(command=tree.yview)
+    tree_horizontal_scroll.configure(command=tree.xview)
 
     # Show values in Entries box when row is selected
     def get_selected_row(event):
