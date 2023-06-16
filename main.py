@@ -164,6 +164,8 @@ def main_window():
 
 
     window = tkboot.Window(themename="superhero")
+    window.title("Budget Tracker")
+    window.resizable(False, False)
 
     # Style
     app_Style = tkboot.Style()
@@ -175,6 +177,7 @@ def main_window():
     sidebar_frame = tkboot.Frame(window, style="dark")
     sidebar_frame.grid(row=0, column=0, ipadx=30, padx=(0,10), sticky="NSW")
 
+    # Sidebar Logo
     image = Image.open("images/budget_sidebar.png")
     img = image.resize((128, 128))
     logo_image = ImageTk.PhotoImage(img)
