@@ -12,6 +12,8 @@ def login_window(parent):
     signin_window = tkboot.Toplevel()
     signin_window.geometry("600x290")
     signin_window.title('Login')
+    signin_window.resizable(False, False)
+    signin_window.iconbitmap(bitmap="images/app_logo.ico")
     signin_window.protocol('WM_DELETE_WINDOW', parent.quit)
 
     # Style
