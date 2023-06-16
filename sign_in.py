@@ -12,7 +12,7 @@ def login_window(parent):
     signin_window = tkboot.Toplevel()
     signin_window.geometry("600x290")
     signin_window.title('Login')
-    # signin_window.protocol('WM_DELETE_WINDOW', parent.quit)
+    signin_window.protocol('WM_DELETE_WINDOW', parent.quit)
 
     # Style
     app_Style = tkboot.Style()
