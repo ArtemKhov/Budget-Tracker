@@ -45,7 +45,7 @@ python -m venv env
 ```
 env\Scripts\activate
 ```
-4) Install the dependencies:
+4) Install the requirements.txt:
 ```
 pip install -r requirements.txt
 ```
