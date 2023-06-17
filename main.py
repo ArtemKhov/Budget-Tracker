@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+import tkinter.font as TkFont
 import ttkbootstrap as tkboot
 from ttkbootstrap.constants import *
 from PIL import Image, ImageTk
@@ -170,14 +171,21 @@ def main_window():
 
     HOME_LABELS_FONT = ("", 12, "bold")
     HOME_ENTRIES_FONT = ("", 11)
+    TREEVIEW_HEADINGS_FONT = ("", 10, "bold")
+    TREEVIEW_ROW_FONT = ("", 10)
 
     # Style
     app_Style = tkboot.Style()
+    # Style Sidebar's buttons
     app_Style.configure("primary.TButton", font=("", 14), foreground="white")
-    app_Style.configure("TLabel", font=("", 16), background="#20374C")
-    app_Style.configure("info.Treeview", font=("", 10), rowheight=22)
-    app_Style.configure("info.Treeview.Heading", font=("", 10, "bold"), foreground="black")
-
+    # Style Sidebar logo
+    app_Style.configure("TLabel", background="#20374C")
+    # Style Table Headings and Rows
+    app_Style.configure("info.Treeview.Heading", font=TREEVIEW_HEADINGS_FONT, foreground="black")
+    app_Style.configure("info.Treeview", font=TREEVIEW_ROW_FONT, rowheight=22)
+    # Style Font In the Listbox (Combobox)
+    listbox_font = TkFont.Font(None, size=11)
+    window.option_add("*TCombobox*Listbox*Font", listbox_font)
 
 
     # Sidebar Frame
