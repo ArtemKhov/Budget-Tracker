@@ -168,12 +168,15 @@ def main_window():
     window.iconbitmap(bitmap="images/app_logo.ico")
     window.iconbitmap(default="images/app_logo.ico")
 
-    HOME_LABELS_FONT = ("", 12)
+    HOME_LABELS_FONT = ("", 12, "bold")
+    HOME_ENTRIES_FONT = ("", 11)
 
     # Style
     app_Style = tkboot.Style()
     app_Style.configure("primary.TButton", font=("", 14), foreground="white")
     app_Style.configure("TLabel", font=("", 16), background="#20374C")
+    app_Style.configure("info.Treeview", font=("", 10), rowheight=22)
+    app_Style.configure("info.Treeview.Heading", font=("", 10, "bold"), foreground="black")
 
 
 
@@ -186,7 +189,7 @@ def main_window():
     img = image.resize((128, 128))
     logo_image = ImageTk.PhotoImage(img)
     logo_sidebar = tkboot.Label(sidebar_frame, image=logo_image)
-    logo_sidebar.grid(row=0, column=0, pady=20)
+    logo_sidebar.grid(row=0, column=0, pady=(20, 45))
 
     # Sidebar Buttons
     image_home = Image.open("images/sidebar/home.png")
@@ -247,20 +250,20 @@ def main_window():
 
     # Create home Entries
     product_text = StringVar()
-    title_entry = tkboot.Entry(home_frame, textvariable=product_text)
+    title_entry = tkboot.Entry(home_frame, textvariable=product_text, font=HOME_ENTRIES_FONT)
     title_entry.grid(row=0, column=0, columnspan=3, padx=(110, 12), pady=(0, 10), sticky="EW")
 
     price_text = StringVar()
-    price_entry = tkboot.Entry(home_frame, textvariable=price_text)
+    price_entry = tkboot.Entry(home_frame, textvariable=price_text, font=HOME_ENTRIES_FONT)
     price_entry.grid(row=1, column=0, columnspan=3, padx=(110, 12), pady=(0, 10), sticky="EW")
 
     comment_text = StringVar()
-    comment_entry = tkboot.Entry(home_frame, textvariable=comment_text)
+    comment_entry = tkboot.Entry(home_frame, textvariable=comment_text, font=HOME_ENTRIES_FONT)
     comment_entry.grid(row=3, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
     # Create home Combobox
     categories = open_categories_file()
-    category_combobox = ttk.Combobox(home_frame, values=categories, state="readonly")
+    category_combobox = ttk.Combobox(home_frame, values=categories, font=HOME_ENTRIES_FONT, state="readonly")
     category_combobox.grid(row=2, column=0, columnspan=3, padx=(110, 12), pady=(0, 10), sticky="EW")
 
     # Create home Buttons
