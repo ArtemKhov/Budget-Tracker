@@ -7,7 +7,7 @@ from PIL import Image, ImageTk
 import pandas as pd
 import plotly.express as px
 from budget_db import Budget
-from sign_in import login_window
+from welcome_screen import login_window
 
 
 # Show main window when user correctly login
@@ -116,8 +116,8 @@ def main_window():
             return categories
 
 
-    def switch_to_overview():
-        overview_frame.grid(row=0, column=1, pady=(20, 10))
+    def switch_to_home():
+        home_frame.grid(row=0, column=1, pady=(20, 10))
         graph_frame.grid_forget()
 
 
@@ -125,10 +125,10 @@ def main_window():
         if budget.view() == []:
             messagebox.showwarning(title="Empty Table",
                                    message="There's nothing in the purchases."
-                                           "\n\nAdd your purchase records in Overview menu to form a Graph.")
+                                           "\n\nAdd your purchase records in Home menu to form a Graph.")
         else:
             graph_frame.grid(row=0, column=1, pady=(20, 10))
-            overview_frame.grid_forget()
+            home_frame.grid_forget()
             create_pie_chart()
             update_chart_image()
 
@@ -153,15 +153,14 @@ def main_window():
         fig.write_image("pie_chart/pie_budget.png")
 
 
-
     # Update image into Canvas every time when update any values in the DataBase
     def update_chart_image():
         pie_chart_img.configure(file="pie_chart/pie_budget.png")
         canvas.itemconfig(image_container, image=pie_chart_img)
 
 
-    budget = Budget()
 
+    budget = Budget()
 
     window = tkboot.Window(themename="superhero")
     window.title("Budget Tracker")
@@ -171,7 +170,7 @@ def main_window():
 
     # Style
     app_Style = tkboot.Style()
-    app_Style.configure("secondary.TButton", font=("", 14), foreground="white")
+    app_Style.configure("primary.TButton", font=("", 14), foreground="white")
     app_Style.configure("TLabel", font=("", 16), background="#20374C")
 
 
@@ -180,26 +179,36 @@ def main_window():
     sidebar_frame.grid(row=0, column=0, ipadx=30, padx=(0,10), sticky="NSW")
 
     # Sidebar Logo
-    image = Image.open("images/logo_sidebar.png")
+    image = Image.open("images/sidebar/logo_sidebar.png")
     img = image.resize((128, 128))
     logo_image = ImageTk.PhotoImage(img)
     logo_sidebar = tkboot.Label(sidebar_frame, image=logo_image)
     logo_sidebar.grid(row=0, column=0, pady=20)
 
     # Sidebar Buttons
-    overview_button = tkboot.Button(sidebar_frame,
-                                    text="Overview",
+    image_home = Image.open("images/sidebar/home.png")
+    img_home = image_home.resize((42, 42))
+    home_image = ImageTk.PhotoImage(img_home)
+    home_button = tkboot.Button(sidebar_frame,
+                                    text="Home",
                                     takefocus=False,
-                                    style="secondary.TButton",
-                                    command=switch_to_overview)
-    overview_button.grid(row=1, column=0, sticky="WE")
+                                    style="primary.TButton",
+                                    image=home_image,
+                                    compound=LEFT,
+                                    command=switch_to_home)
+    home_button.grid(row=1, column=0, sticky="WE", padx=10)
 
+    image_graph = Image.open("images/sidebar/pie-chart.png")
+    img_graph = image_graph.resize((42, 42))
+    graph_image = ImageTk.PhotoImage(img_graph)
     graph_button = tkboot.Button(sidebar_frame,
                                  text="Graph",
                                  takefocus=False,
-                                 style="secondary.TButton",
+                                 style="primary.TButton",
+                                 image=graph_image,
+                                 compound=LEFT,
                                  command=switch_to_graph)
-    graph_button.grid(row=2, column=0, pady=20, sticky="WE")
+    graph_button.grid(row=2, column=0, pady=20, sticky="WE", padx=10)
 
 
 
@@ -213,65 +222,65 @@ def main_window():
     image_container = canvas.create_image(350, 250, image=pie_chart_img)
 
 
-    # Overview Frame
-    overview_frame = tkboot.Frame(window)
-    overview_frame.grid(row=0, column=1, pady=(20, 10))
+    # home Frame
+    home_frame = tkboot.Frame(window)
+    home_frame.grid(row=0, column=1, pady=(20, 10))
 
-    # Create Overview Labels
-    title_label = Label(overview_frame, text="Title*")
+    # Create home Labels
+    title_label = Label(home_frame, text="Title*")
     title_label.grid(row=0, column=0, sticky="W")
 
-    price_label = Label(overview_frame, text="Price*")
+    price_label = Label(home_frame, text="Price*")
     price_label.grid(row=1, column=0, sticky="W")
 
-    comment_label = Label(overview_frame, text="Category*")
+    comment_label = Label(home_frame, text="Category*")
     comment_label.grid(row=2, column=0, sticky="W")
 
-    category_label = Label(overview_frame, text="Comment")
+    category_label = Label(home_frame, text="Comment")
     category_label.grid(row=3, column=0, sticky="W")
 
-    required_fields_label = Label(overview_frame, text="* required fields")
+    required_fields_label = Label(home_frame, text="* required fields")
     required_fields_label.grid(row=4, column=0, padx=85)
 
-    # Create Overview Entries
+    # Create home Entries
     product_text = StringVar()
-    title_entry = tkboot.Entry(overview_frame, textvariable=product_text)
+    title_entry = tkboot.Entry(home_frame, textvariable=product_text)
     title_entry.grid(row=0, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
     price_text = StringVar()
-    price_entry = tkboot.Entry(overview_frame, textvariable=price_text)
+    price_entry = tkboot.Entry(home_frame, textvariable=price_text)
     price_entry.grid(row=1, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
     comment_text = StringVar()
-    comment_entry = tkboot.Entry(overview_frame, textvariable=comment_text)
+    comment_entry = tkboot.Entry(home_frame, textvariable=comment_text)
     comment_entry.grid(row=3, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
-    # Create Overview Combobox
+    # Create home Combobox
     categories = open_categories_file()
-    category_combobox = ttk.Combobox(overview_frame, values=categories, state="readonly")
+    category_combobox = ttk.Combobox(home_frame, values=categories, state="readonly")
     category_combobox.grid(row=2, column=0, columnspan=3, padx=(110, 12), sticky="EW")
 
-    # Create Overview Buttons
-    add_button = tkboot.Button(overview_frame, text="Add Record", width=15, style="success", takefocus=False, command=add_record)
+    # Create home Buttons
+    add_button = tkboot.Button(home_frame, text="Add Record", width=15, style="success", takefocus=False, command=add_record)
     add_button.grid(row=0, column=4)
 
-    show_all_button = tkboot.Button(overview_frame, text="Show All", width=15, takefocus=False, command=show_table)
+    show_all_button = tkboot.Button(home_frame, text="Show All", width=15, takefocus=False, command=show_table)
     show_all_button.grid(row=6, column=4)
 
-    search_button = tkboot.Button(overview_frame, text="Search", width=15, takefocus=False, command=search_row)
+    search_button = tkboot.Button(home_frame, text="Search", width=15, takefocus=False, command=search_row)
     search_button.grid(row=7, column=4)
 
-    update_button = tkboot.Button(overview_frame, text="Update Record", width=15, takefocus=False, command=update_record)
+    update_button = tkboot.Button(home_frame, text="Update Record", width=15, takefocus=False, command=update_record)
     update_button.grid(row=8, column=4)
 
-    remove_record_button = tkboot.Button(overview_frame, text="Remove Selected Record", width=25, takefocus=False, command=delete_record)
+    remove_record_button = tkboot.Button(home_frame, text="Remove Selected Record", width=25, takefocus=False, command=delete_record)
     remove_record_button.grid(row=10, column=1, padx=(150,0), sticky="E")
 
-    remove_all_records_button = tkboot.Button(overview_frame, text="Remove All Records", width=20, takefocus=False, command=delete_all_records)
+    remove_all_records_button = tkboot.Button(home_frame, text="Remove All Records", width=20, takefocus=False, command=delete_all_records)
     remove_all_records_button.grid(row=10, column=2)
 
-    # Create Overview Budget Table
-    tree_frame = Frame(overview_frame)
+    # Create home Budget Table
+    tree_frame = Frame(home_frame)
     tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=10, padx=(0, 20))
 
     tree_vertical_scroll = tkboot.Scrollbar(tree_frame, style="info-round")
