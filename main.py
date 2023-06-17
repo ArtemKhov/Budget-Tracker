@@ -168,10 +168,13 @@ def main_window():
     window.iconbitmap(bitmap="images/app_logo.ico")
     window.iconbitmap(default="images/app_logo.ico")
 
+    HOME_LABELS_FONT = ("", 12)
+
     # Style
     app_Style = tkboot.Style()
     app_Style.configure("primary.TButton", font=("", 14), foreground="white")
     app_Style.configure("TLabel", font=("", 16), background="#20374C")
+
 
 
     # Sidebar Frame
@@ -227,29 +230,29 @@ def main_window():
     home_frame.grid(row=0, column=1, pady=(20, 10))
 
     # Create home Labels
-    title_label = Label(home_frame, text="Title*")
-    title_label.grid(row=0, column=0, sticky="W")
+    title_label = Label(home_frame, text="Title*", font=HOME_LABELS_FONT)
+    title_label.grid(row=0, column=0, sticky="W", pady=(0, 10))
 
-    price_label = Label(home_frame, text="Price*")
-    price_label.grid(row=1, column=0, sticky="W")
+    price_label = Label(home_frame, text="Price*", font=HOME_LABELS_FONT)
+    price_label.grid(row=1, column=0, sticky="W", pady=(0, 10))
 
-    comment_label = Label(home_frame, text="Category*")
-    comment_label.grid(row=2, column=0, sticky="W")
+    category_label = Label(home_frame, text="Category*", font=HOME_LABELS_FONT)
+    category_label.grid(row=2, column=0, sticky="W", pady=(0, 10))
 
-    category_label = Label(home_frame, text="Comment")
-    category_label.grid(row=3, column=0, sticky="W")
+    comment_label = Label(home_frame, text="Comment", font=HOME_LABELS_FONT)
+    comment_label.grid(row=3, column=0, sticky="W")
 
     required_fields_label = Label(home_frame, text="* required fields")
-    required_fields_label.grid(row=4, column=0, padx=85)
+    required_fields_label.grid(row=4, column=0, padx=(95,0))
 
     # Create home Entries
     product_text = StringVar()
     title_entry = tkboot.Entry(home_frame, textvariable=product_text)
-    title_entry.grid(row=0, column=0, columnspan=3, padx=(110, 12), sticky="EW")
+    title_entry.grid(row=0, column=0, columnspan=3, padx=(110, 12), pady=(0, 10), sticky="EW")
 
     price_text = StringVar()
     price_entry = tkboot.Entry(home_frame, textvariable=price_text)
-    price_entry.grid(row=1, column=0, columnspan=3, padx=(110, 12), sticky="EW")
+    price_entry.grid(row=1, column=0, columnspan=3, padx=(110, 12), pady=(0, 10), sticky="EW")
 
     comment_text = StringVar()
     comment_entry = tkboot.Entry(home_frame, textvariable=comment_text)
@@ -258,11 +261,11 @@ def main_window():
     # Create home Combobox
     categories = open_categories_file()
     category_combobox = ttk.Combobox(home_frame, values=categories, state="readonly")
-    category_combobox.grid(row=2, column=0, columnspan=3, padx=(110, 12), sticky="EW")
+    category_combobox.grid(row=2, column=0, columnspan=3, padx=(110, 12), pady=(0, 10), sticky="EW")
 
     # Create home Buttons
     add_button = tkboot.Button(home_frame, text="Add Record", width=15, style="success", takefocus=False, command=add_record)
-    add_button.grid(row=0, column=4)
+    add_button.grid(row=1, column=4, rowspan=2, padx=(0, 10), ipady=5)
 
     show_all_button = tkboot.Button(home_frame, text="Show All", width=15, takefocus=False, command=show_table)
     show_all_button.grid(row=6, column=4)
