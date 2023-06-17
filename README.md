@@ -2,6 +2,16 @@
 
 A desktop application for budget tracking. Allows you to record spending by price and category. The amount of spending by category is conveniently displayed in a graph in the Graph menu.
 
+## Demo
+### Start Window
+![login_window](https://github.com/ArtemKhov/Budget-Tracker/assets/107346597/ebc86cb5-2a0b-4296-a87c-b8cb176fe0ca)
+
+### Home Window
+![home_window](https://github.com/ArtemKhov/Budget-Tracker/assets/107346597/2677a1a3-a757-4ce1-a6f7-42c7f161ecff)
+
+### Graph Window
+![graph_window](https://github.com/ArtemKhov/Budget-Tracker/assets/107346597/29cbaf03-af16-43fa-88df-44fd180f12be)
+
 ## Technologies
 
 **Tech Stack:**
