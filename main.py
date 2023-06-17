@@ -11,7 +11,6 @@ from budget_db import Budget
 from welcome_screen import login_window
 
 
-# Show main window when user correctly login
 def main_window():
 
     def add_record():
@@ -177,12 +176,14 @@ def main_window():
     # Style
     app_Style = tkboot.Style()
     # Style Sidebar's buttons
-    app_Style.configure("primary.TButton", font=("", 14), foreground="white")
+    app_Style.configure("primary.TButton", font=("", 14, "bold"), foreground="white")
     # Style Sidebar logo
     app_Style.configure("TLabel", background="#20374C")
     # Style Table Headings and Rows
     app_Style.configure("info.Treeview.Heading", font=TREEVIEW_HEADINGS_FONT, foreground="black")
     app_Style.configure("info.Treeview", font=TREEVIEW_ROW_FONT, rowheight=22)
+    # Style primary buttons in home sections
+    app_Style.configure("TButton", font=("", 12, "bold"))
     # Style Font In the Listbox (Combobox)
     listbox_font = TkFont.Font(None, size=11)
     window.option_add("*TCombobox*Listbox*Font", listbox_font)
@@ -254,48 +255,48 @@ def main_window():
     comment_label.grid(row=3, column=0, sticky="W")
 
     required_fields_label = Label(home_frame, text="* required fields")
-    required_fields_label.grid(row=4, column=0, padx=(95,0))
+    required_fields_label.grid(row=4, column=0, padx=(110,0), sticky="W")
 
     # Create home Entries
     product_text = StringVar()
     title_entry = tkboot.Entry(home_frame, textvariable=product_text, font=HOME_ENTRIES_FONT)
-    title_entry.grid(row=0, column=0, columnspan=3, padx=(110, 12), pady=(0, 10), sticky="EW")
+    title_entry.grid(row=0, column=0, padx=(110, 12), pady=(0, 10), sticky="EW")
 
     price_text = StringVar()
     price_entry = tkboot.Entry(home_frame, textvariable=price_text, font=HOME_ENTRIES_FONT)
-    price_entry.grid(row=1, column=0, columnspan=3, padx=(110, 12), pady=(0, 10), sticky="EW")
+    price_entry.grid(row=1, column=0, padx=(110, 12), pady=(0, 10), sticky="EW")
 
     comment_text = StringVar()
     comment_entry = tkboot.Entry(home_frame, textvariable=comment_text, font=HOME_ENTRIES_FONT)
-    comment_entry.grid(row=3, column=0, columnspan=3, padx=(110, 12), sticky="EW")
+    comment_entry.grid(row=3, column=0, padx=(110, 12), sticky="EW")
 
     # Create home Combobox
     categories = open_categories_file()
     category_combobox = ttk.Combobox(home_frame, values=categories, font=HOME_ENTRIES_FONT, state="readonly")
-    category_combobox.grid(row=2, column=0, columnspan=3, padx=(110, 12), pady=(0, 10), sticky="EW")
+    category_combobox.grid(row=2, column=0, padx=(110, 12), pady=(0, 10), sticky="EW")
 
     # Create home Buttons
     add_button = tkboot.Button(home_frame, text="Add Record", width=15, style="success", takefocus=False, command=add_record)
-    add_button.grid(row=1, column=4, rowspan=2, padx=(0, 10), ipady=5)
+    add_button.grid(row=1, column=1, rowspan=2, padx=(0, 10), ipady=5)
 
     show_all_button = tkboot.Button(home_frame, text="Show All", width=15, takefocus=False, command=show_table)
-    show_all_button.grid(row=6, column=4)
+    show_all_button.grid(row=6, column=1, padx=(0, 10))
 
     search_button = tkboot.Button(home_frame, text="Search", width=15, takefocus=False, command=search_row)
-    search_button.grid(row=7, column=4)
+    search_button.grid(row=7, column=1, padx=(0, 10))
 
     update_button = tkboot.Button(home_frame, text="Update Record", width=15, takefocus=False, command=update_record)
-    update_button.grid(row=8, column=4)
+    update_button.grid(row=8, column=1, padx=(0, 10))
 
     remove_record_button = tkboot.Button(home_frame, text="Remove Selected Record", width=25, takefocus=False, command=delete_record)
-    remove_record_button.grid(row=10, column=1, padx=(150,0), sticky="E")
+    remove_record_button.grid(row=10, column=0, padx=(0, 250), sticky="E")
 
     remove_all_records_button = tkboot.Button(home_frame, text="Remove All Records", width=20, takefocus=False, command=delete_all_records)
-    remove_all_records_button.grid(row=10, column=2)
+    remove_all_records_button.grid(row=10, column=0,  padx=(0, 25), sticky="E")
 
     # Create home Budget Table
     tree_frame = Frame(home_frame)
-    tree_frame.grid(row=5, column=0, columnspan=3, rowspan=5, pady=10, padx=(0, 20))
+    tree_frame.grid(row=5, column=0, rowspan=5, pady=(10, 15), padx=(0, 10))
 
     tree_vertical_scroll = tkboot.Scrollbar(tree_frame, style="info-round")
     tree_vertical_scroll.grid(row=0, column=1, rowspan=5, sticky="NS")

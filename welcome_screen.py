@@ -18,12 +18,7 @@ def login_window(parent):
 
     # Style
     app_Style = tkboot.Style()
-    app_Style.configure("dark.TButton",
-                        font=("Microsoft Yeahei UI Light", 9, "bold underline"),
-                        foreground="white",
-                        background="#20374C")
     app_Style.configure("success.TButton", font=('', 12, "bold"))
-    app_Style.configure("dark.TLabel")
 
     # Login Frame
     login_frame = tkboot.Frame(signin_window, style="dark")
